@@ -11,7 +11,7 @@ DigitalIn confirm(A2);
 AnalogOut Aout(D7); // Declare pin 18 as an analog out
 double i;
 double fre; // Declare a float to range between 0 and 1
-int mode, mode_next, j;
+int mode, mode_next, j, Generate;
 Thread thread;
 AnalogIn Ain_s(A3);
 int sample = 100;
@@ -45,6 +45,7 @@ void mode_thread()
         if(confirm)
         {
             mode = mode_next;
+            Generate = mode;
             uLCD.color(BLUE);
             uLCD.printf("confirm frequency is %.3f HZ       ", fre);
         }
@@ -91,8 +92,8 @@ int main()
 
     while(1) 
     {
-        if(mode == 1){      // 1HZ
-            for(i = 0, j = 0; i <= 0.91; i=i+0.03033)//0.0002439)//12195122)
+        if(Generate == 1){      // 1HZ
+            for(i = 0, j = 0; i <= 0.91; i=i+0.03033)
             {
                 Aout = i;
                 ADCdata[j] = Ain_s.read()*3.3;
@@ -100,7 +101,7 @@ int main()
                 j = j + 1;
             }
             // Make 'aout' go from 1 to 0, in 100 steps of 0.01
-            for(i = 0.91; i >= 0; i=i-0.013)//0.000108696)//000054347826087)
+            for(i = 0.91; i >= 0; i=i-0.013)
             {
                 Aout = i;
                 ADCdata[j] = Ain_s.read()*3.3;
@@ -112,8 +113,8 @@ int main()
                 printf("%f\r\n", ADCdata[j]);
             }
         }
-        if(mode == 2){  // 0.36HZ
-            for(i = 0, j = 0; i <= 0.91; i=i+0.03033)//0.002184874)//00109243697479)
+        if(Generate == 2){  // 0.36HZ
+            for(i = 0, j = 0; i <= 0.91; i=i+0.03033)
             {
                 Aout = i;
                 ADCdata[j] = Ain_s.read()*3.3;
@@ -121,7 +122,7 @@ int main()
                 j = j +1;
             }
             // Make 'aout' go from 1 to 0, in 100 steps of 0.01
-            for(i = 0.91; i >= 0; i=i-0.013)//0.000936214)//000468106995885)
+            for(i = 0.91; i >= 0; i=i-0.013)
             {
                 Aout = i;
                 ADCdata[j] = Ain_s.read()*3.3;
@@ -133,20 +134,20 @@ int main()
                 printf("%f\r\n", ADCdata[j]);
             }
         }
-        if(mode == 3){      // 0.036HZ
-            for(i = 0, j = 0; i <= 0.91; i=i+0.03033)//0030333)
+        if(Generate == 3){      // 0.036HZ
+            for(i = 0, j = 0; i <= 0.91; i=i+0.03033)
             {
                 Aout = i;
                 ADCdata[j] = Ain_s.read()*3.3;
-                ThisThread::sleep_for(270ms);//3ms);
+                ThisThread::sleep_for(270ms);
                 j = j + 1;
             }
             // Make 'aout' go from 1 to 0, in 100 steps of 0.01
-            for(i = 0.91; i >= 0; i=i-0.013)//0013)
+            for(i = 0.91; i >= 0; i=i-0.013)
             {
                 Aout = i;
                 ADCdata[j] = Ain_s.read()*3.3;
-                ThisThread::sleep_for(270ms);//7ms);
+                ThisThread::sleep_for(270ms);
                 j = j + 1;
             }  
             for (j = 0; j <=100; j++)
