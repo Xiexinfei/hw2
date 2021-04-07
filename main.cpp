@@ -16,7 +16,7 @@ Thread thread;
 AnalogIn Ain_s(A3);
 int sample = 100;
 float ADCdata[1000];
-
+/////
 void mode_thread()
  {
      mode = 1;
